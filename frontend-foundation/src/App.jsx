@@ -9,19 +9,45 @@
 // }
 // export default App;
 
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import ItemList from "./components/ItemList";
-import Counter from "./components/Counter";
-import "./App.css";
-function App() {
-return (
-<div>
-<Navbar />
-<Hero />
-<ItemList />
-<Counter />
-</div>
-);
-}
+// import Navbar from "./components/Navbar";
+// import Hero from "./components/Hero";
+// import ItemList from "./components/ItemList";
+// import Counter from "./components/Counter";
+// import "./App.css";
+// function App() {
+// return (
+// <div>
+// <Navbar />
+// <Hero />
+// <ItemList />
+// <Counter />
+// </div>
+// );
+// }
+// export default App;
+
+
+
+import { useState, useEffect } from "react"; 
+import StudentForm from "../../frontend-foundation/src/components/StudentForm"; 
+import StudentList from "../../frontend-foundation/src/components/StudentList"; 
+import { getAllStudents } from "../../frontend-foundation/src/api/studentApi"; 
+import "./App.css"; 
+function App() { 
+  const [students, setStudents] = useState([]); 
+  const fetchStudents = async () => { 
+    const res = await getAllStudents(); 
+    setStudents(res.data); 
+  }; 
+  useEffect(() => { 
+    fetchStudents(); 
+  }, []); 
+  return ( 
+    <div className="container"> 
+      <h1>Student Management System</h1> 
+      <StudentForm onStudentAdded={fetchStudents} /> 
+      <StudentList students={students} /> 
+    </div> 
+  ); 
+} 
 export default App;
